@@ -1,0 +1,115 @@
+.common-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.common-input-label {
+  font-family: "Oswald", sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #333333;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.common-input-required-asterisk {
+  color: #d9383a;
+  font-weight: 700;
+}
+
+.common-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.common-input-icon {
+  position: absolute;
+  left: 14px;
+  color: #888888;
+  font-size: 1.1rem;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.common-input-field {
+  width: 100%;
+  padding: 12px 16px;
+  background-color: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: #1e293b;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+}
+
+.common-input-field.with-icon {
+  padding-left: 42px;
+}
+
+.common-input-field:hover:not(:disabled) {
+  border-color: #cbd5e1;
+}
+
+.common-input-field:focus {
+  border-color: #111111;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+}
+
+.common-input-field:disabled {
+  background-color: #f1f5f9;
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+/* Error State */
+.common-input-group.has-error .common-input-field {
+  border-color: #ef4444;
+  background-color: #fffbfa;
+}
+
+.common-input-group.has-error .common-input-field:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+.common-input-error {
+  font-size: 0.8rem;
+  color: #dc2626;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+  animation: fadeIn 0.2s ease-in;
+}
+
+.common-input-helper {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

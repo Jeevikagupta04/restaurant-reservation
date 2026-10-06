@@ -1,152 +1,88 @@
-Restaurant Reservation System
+# 🍽️ Jeevika Restaurant Reservation System (Full-Stack MERN)
 
-A full-stack restaurant reservation web application built using the **MERN Stack (MongoDB, Express.js, React.js, Node.js)**. 
-The application provides a responsive restaurant website where users can explore the restaurant, view popular dishes and team information, and submit table reservations through an online reservation form.
+A production-ready, full-stack dining reservation platform architected with the **MERN Stack** (**M**ongoDB Atlas, **E**xpress.js, **R**eact 18 + Vite, **N**ode.js), **Redux Toolkit**, **React Hook Form**, and **Yup**.
 
-Features
+The application features:
+1. **Public Guest Portal:** High-end restaurant landing page with signature dishes, culinary team profiles, and reservation booking with strict 10-digit phone verification powered by **React Hook Form** and **Yup**.
+2. **Secured Staff Admin Portal:** Protected by JWT authentication and Redux Toolkit state management. Staff can manage incoming reservations, change statuses (`Pending`, `Confirmed`, `Cancelled`), create phone/walk-in bookings, export filtered lists to CSV, and delete entries via custom animated confirmation modals.
+3. **Enterprise Design System & Common Components:** Polymorphic `CommonButton`, accessible `CommonModal`, `CommonInput`, and `CommonBadge` components.
+4. **Backend REST API:** Node.js + Express REST API with MongoDB Atlas, Mongoose schema validation, JWT auth, and bcrypt.
 
-- Responsive restaurant landing page
-- Restaurant information and about section
-- Popular dishes/menu section
-- Restaurant qualities and statistics
-- Team/chef section
-- Online table reservation form
-- Form validation on the backend
-- MongoDB database for storing reservations
-- Success and error notifications
-- React Router based navigation
-- Responsive mobile navigation
+---
 
+## 🏗️ Project Architecture
 
-Frontend
-- React.js
-- Vite
-- React Router
-- Axios
-- React Icons
-- React Hot Toast
-- React Scroll
-- CSS
-
-Backend
-- Node.js
-- Express.js
-- MongoDB
-- Mongoose
-- CORS
-- dotenv
-- Validator
-
-## Project Structure
-
-Mern_Stack_Restaurant_Reservation/
-│
-├── backend/
+```
+restaurant-reservation/
+├── backend/                # Node.js + Express REST API (MongoDB Atlas, JWT, bcrypt)
 │   ├── controller/
 │   ├── database/
 │   ├── middlewares/
 │   ├── models/
 │   ├── routes/
-│   ├── app.js
+│   ├── README.md           # Express backend architecture & API reference
 │   └── server.js
 │
-└── frontend/
-    ├── public/
-    └── src/
-        ├── components/
-        ├── Pages/
-        ├── App.jsx
-        ├── App.css
-        ├── main.jsx
-        └── restApi.json
+├── frontend/               # React 18 + Vite Single Page Application
+│   ├── src/
+│   │   ├── api/            # API client layer
+│   │   ├── components/
+│   │   │   ├── common/     # Reusable components (CommonButton, CommonModal, CommonInput, CommonBadge)
+│   │   │   └── ...         # Section components (Hero, Menu, Reservation, etc.)
+│   │   ├── hooks/          # Custom Hooks (useReservations, useAuth, useModal)
+│   │   ├── store/          # Redux Toolkit store (authSlice, reservationSlice)
+│   │   ├── validation/     # Yup schemas (reservationSchema, adminLoginSchema)
+│   │   ├── types/          # TypeScript definitions (types.d.ts)
+│   │   └── Pages/          # Admin Portal, Home, Success, 404
+│   ├── README.md           # Frontend-specific architecture & component guide
+│   └── vite.config.js
+│
+└── README.md               # Root repository overview
+```
 
-The frontend is built with React and contains the restaurant UI and reservation form. 
-When a user submits a reservation, the frontend sends the reservation details to the Express.js REST API using Axios.
-The backend validates the submitted information and uses Mongoose to store the reservation in MongoDB. After successful storage, the API returns a confirmation message which is displayed to the user through a toast notification.
+---
 
-React Frontend
-      │
-      │ Axios POST Request
-      ▼
-Express REST API
-      │
-      ▼
-Reservation Controller
-      │
-      ▼
-Mongoose Model
-      │
-      ▼
-MongoDB
-      │
-      ▼
-Success Response
-      │
-      ▼
-React Success Page
+## ⚡ Quick Start
 
- API Endpoint
-
- Create Reservation
-
-http
-POST /api/v1/reservation/send
-
-
-Request body:
-
-json
-{
-  "firstName": "John",
-  "lastName": "Doe",
-  "email": "john@example.com",
-  "phone": "98765432101",
-  "date": "2026-10-10",
-  "time": "19:30"
-}
-
-
-## Environment Variables
-
-Create a `config.env` file inside the `backend` directory:
-
-PORT=4000
-MONGO_URI=your_mongodb_connection_string
-FRONTEND_URL=http://localhost:5173
-
-
-## Running the Project
-
-### Backend
-
-bash
+### 1. Setup Backend (Node.js & Express)
+```bash
 cd backend
 npm install
+
+# Create environment configuration
+cp .env.example .env
+# Edit .env with your MongoDB Atlas connection string
+
 npm run dev
+```
+*Backend runs on `http://localhost:4000` (auto-seeds default admin: `admin@jeevika.com` / `Admin@1234`).*
 
-### Frontend
-
-Open another terminal:
-
-bash
-cd frontend
+### 2. Setup Frontend (React 18 + Redux + Vite)
+```bash
+cd ../frontend
 npm install
 npm run dev
+```
+*Frontend runs on `http://localhost:5173`.*
 
-The frontend will normally run on:
+---
 
-http://localhost:5173
+## 🔑 Key Features Overview
 
+| Feature | Details |
+| :--- | :--- |
+| **Strict 10-Digit Phone Validation** | Validated across database schema, Yup schema, and frontend input (`pattern="[0-9]{10}"`). Auto-filters non-numeric keystrokes. |
+| **Redux Toolkit Architecture** | Global centralized state for `auth` (token, session hydration, user info) and `reservations` (memoized filtering, statistics calculation, async CRUD thunks). |
+| **React Hook Form + Yup** | High-performance, schema-driven form validation with inline visual error feedback and touched state tracking. |
+| **Reusable Common Components** | `CommonButton` (polymorphic scroll/router link), `CommonModal` (accessible dialog with scroll-lock & ESC dismiss), `CommonInput` (with forwardRef & error styling), `CommonBadge` (status pills). |
+| **Custom Hooks** | `useReservations` (data & dispatch wrapper), `useAuth` (session & login methods), `useModal` (modal state & keyboard accessibility). |
+| **JWT Admin Authentication** | Password hashed with `bcrypt`. Bearer token authentication on all administrative endpoints. |
+| **Automated Admin Seeding** | On first startup, the server automatically creates the default administrator account in MongoDB (`admin@jeevika.com` / `Admin@1234`). |
+| **CSV Export** | One-click spreadsheet export for manager reporting with filtered date and status ranges. |
 
-and the backend on:
+---
 
-http://localhost:4000
+## 📚 Detailed Documentation
 
-
-Database
-
-The application uses MongoDB with Mongoose. Reservation records are stored in the `RESERVATIONS` database using the `Reservation` schema.
-
-Project Purpose
-
-This project demonstrates how a React frontend can communicate with a Node.js/Express REST API and persist user-submitted reservation data in MongoDB using the MERN stack.
+- **[Frontend Web Application & Architecture Guide](./frontend/README.md)**
+- **[Node.js / Express Backend API Documentation](./backend/README.md)**
